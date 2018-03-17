@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>
+      Coding challenge
+    </title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <p>Watch video</p>
+    <h5>Downloading</h5>
+    <progress id="progress" value="0"></progress>
+    <h5>Transcoding</h5>
+    <progress id="progress1" value="0"></progress>
+  </body>
+</html>
+
+<script type="text/javascript">
+  const socket = io.connect('http://localhost:3030')
+  socket.on('transcoding', function(data){
+    const transcoding = document.getElementById("progress1")
+    if (transcoding != null) {
+      transcoding.max = 100
+      transcoding.value = data.progress
+    }
+   })
+   socket.on('download', function(data){
+      const downloading = document.getElementById("progress")
+      if (downloading != null) {
+      downloading.max = 100
+      downloading.value = data.progress
+      }
+    })
+  $.get('http://localhost:3030/download-and-encode', function(data){
+           $('body').append('<video controls width="600" height="600"><source src="http://localhost:3030/download-and-encode" type="video/webm"></video>')
+           $('progress').remove()
+           $('progress1').remove()
+           $('h5').remove()
+         })
+</script>
