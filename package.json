@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "express": "^4.16.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "socket.io": "^2.0.4"
+  },
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon --inspect ."
+  }
+}
